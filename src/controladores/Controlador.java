@@ -37,7 +37,7 @@ public class Controlador implements ActionListener {
     }
     
     public void resetearEtiquetaEstadistica(int numeroEtiqueta) {
-        this.etiquetasEstadisticas[numeroEtiqueta - 1].setText("0");
+        this.etiquetasEstadisticas[numeroEtiqueta - 1].setText(String.valueOf(this.dadoModelo.getValorEnPosicion(numeroEtiqueta)));
     }
 
     @Override
@@ -62,9 +62,13 @@ public class Controlador implements ActionListener {
         this.setEtiquetasEstadisticas(5, this.vista.etiquetaEstadisticasSeis);
         
         this.cambiarEtiquetaEstadistica(valorObtenido);
+        
+        this.setearTotalLanzamientos();
     }
     
     public void resetearEstadisticas() {
+        this.dadoModelo.resetearEstadisticas();
+        
         this.setEtiquetasEstadisticas(0, this.vista.etiquetaEstadisticasUno);
         this.setEtiquetasEstadisticas(1, this.vista.etiquetaEstadisticasDos);
         this.setEtiquetasEstadisticas(2, this.vista.etiquetaEstadisticasTres);
@@ -75,6 +79,13 @@ public class Controlador implements ActionListener {
         for (int i = 0; i < this.etiquetasEstadisticas.length; i++) {
             this.resetearEtiquetaEstadistica(i+1);
         }
+        
+        this.setearTotalLanzamientos();
+        
+    }
+    
+    public void setearTotalLanzamientos() {
+        this.vista.etiquetaTotalLanzamientos.setText("Total de lanzamientos: " + this.dadoModelo.getTotalLanzamientos());
     }
 
     
