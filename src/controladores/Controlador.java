@@ -2,6 +2,7 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import modelos.DadoModelo;
 import vista.Vista;
@@ -51,9 +52,13 @@ public class Controlador implements ActionListener {
     }
     
     public void tirarDado() {
+        System.out.println(this.vista.dado.getIcon());
         this.dadoModelo.tirar();
         int valorObtenido = this.dadoModelo.getValorObtenidoDado();
         
+        this.setearIconoDado();
+        
+    
         this.setEtiquetasEstadisticas(0, this.vista.etiquetaEstadisticasUno);
         this.setEtiquetasEstadisticas(1, this.vista.etiquetaEstadisticasDos);
         this.setEtiquetasEstadisticas(2, this.vista.etiquetaEstadisticasTres);
@@ -65,6 +70,26 @@ public class Controlador implements ActionListener {
         
         this.setearTotalLanzamientos();
     }
+    
+    public void setearIconoDado() {
+        ImageIcon icono;
+        int valorObtenidoDado = this.dadoModelo.getValorObtenidoDado();
+        String rutaUrl = "/images/";
+        
+        switch(valorObtenidoDado) {
+            case 1 -> rutaUrl += "dado_uno.png";
+            case 2 -> rutaUrl += "dado_dos.png";
+            case 3 -> rutaUrl += "dado_tres.png";
+            case 4 -> rutaUrl += "dado_cuatro.png";
+            case 5 -> rutaUrl += "dado_cinco.png";
+            case 6 -> rutaUrl += "dado_seis.png";
+        }
+        
+        icono = new ImageIcon(rutaUrl);
+        this.vista.dado.setIcon(new javax.swing.ImageIcon(getClass().getResource(rutaUrl)));
+        System.out.println(this.vista.dado.getIcon());
+    }
+   
     
     public void resetearEstadisticas() {
         this.dadoModelo.resetearEstadisticas();
@@ -81,11 +106,15 @@ public class Controlador implements ActionListener {
         }
         
         this.setearTotalLanzamientos();
-        
+        this.resetearIconoDado();
     }
     
     public void setearTotalLanzamientos() {
         this.vista.etiquetaTotalLanzamientos.setText("Total de lanzamientos: " + this.dadoModelo.getTotalLanzamientos());
+    }
+    
+    public void resetearIconoDado() {
+        this.vista.dado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dado_cero.png")));
     }
 
     
